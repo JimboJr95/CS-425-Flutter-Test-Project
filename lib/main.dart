@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
 // Made the two classes below while working on the flutter tutorial app
 class RandomWordsState extends State<RandomWords>{
   final _suggestions = <WordPair>[];
-  final _stuffins = String;
+  //final _stuffins = String;
   final _biggerFont = const TextStyle(fontSize: 18.0);
   
   @override
