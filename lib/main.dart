@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'I am the dooode',
+      title: 'Startup Name Generator',
       home: RandomWords(),
     );
   }
@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
 // Made the two classes below while working on the flutter tutorial app
 class RandomWordsState extends State<RandomWords>{
   final _suggestions = <WordPair>[];
+  final _stuffins = String;
   final _biggerFont = const TextStyle(fontSize: 18.0);
-  
   
   @override
   Widget build(BuildContext content){
@@ -27,7 +27,7 @@ class RandomWordsState extends State<RandomWords>{
 
     return Scaffold (
     appBar: AppBar(
-      title: Text('Startup Name Generator'),
+      title: Text('I am the dooode'),
     ),
     body: _buildSuggestions(),
   );
