@@ -12,7 +12,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Startup Name Generator',
-      home: RandomWords(),
+      theme: new ThemeData(
+        primaryColor: Colors.tealAccent[700],
+        scaffoldBackgroundColor: Colors.grey[800],
+        primaryTextTheme: Typography(platform: TargetPlatform.iOS).white,
+        textTheme: Typography(platform: TargetPlatform.iOS).white,
+      ),
+      home: new RandomWords(),
     );
   }
 }
@@ -20,7 +26,7 @@ class MyApp extends StatelessWidget {
 // Made the two classes below while working on the flutter tutorial app
 class RandomWordsState extends State<RandomWords>{
   final _suggestions = <WordPair>[];
-  //final _stuffins = String;
+  final Set<WordPair> _saved = new Set<WordPair>();
   final _biggerFont = const TextStyle(fontSize: 18.0);
   
   @override
@@ -31,17 +37,67 @@ class RandomWordsState extends State<RandomWords>{
     return Scaffold (
     appBar: AppBar(
       title: Text('I am the dooode'),
+      actions: <Widget>[
+        new IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved),
+      ],
     ),
     body: _buildSuggestions(),
   );
   }
 
+  void _pushSaved(){
+    Navigator.of(context).push(
+      new MaterialPageRoute<void>(
+        builder: (BuildContext context){
+          final Iterable<ListTile> tiles = _saved.map(
+            (WordPair pair){
+              return new ListTile(
+                title: new Text(
+                  pair.asPascalCase,
+                  style: _biggerFont,
+                ),
+              );
+            },
+          );
+          final List<Widget> divided = ListTile
+          .divideTiles(
+            context: context,
+            tiles: tiles,
+          )
+          .toList();
+
+          return new Scaffold(
+            appBar: new AppBar(
+              title: const Text('Saved Suggestions'),
+            ),
+            body: new ListView(children: divided)
+          );
+        }
+      )
+    );
+  }
+
   Widget _buildRow(WordPair pair){
+    final bool alreadySaved = _saved.contains(pair);
     return ListTile(
         title: Text(
           pair.asPascalCase,
           style: _biggerFont,
         ),
+        trailing: new Icon(
+          alreadySaved ? Icons.favorite : Icons.favorite_border,
+          color: alreadySaved ? Colors.purple : null,
+        ),
+        onTap: (){
+          setState(() {
+                      if(alreadySaved){
+                        _saved.remove(pair);
+                      }
+                      else{
+                        _saved.add(pair);
+                      }
+                    });
+        },
     );
   }
 
@@ -58,7 +114,7 @@ class RandomWordsState extends State<RandomWords>{
 
       itemBuilder: (context, i){
         // Add a one-pixel-high divider widget before each row in theListView.
-        if(i.isOdd) return Divider();
+        if(i.isOdd) return Divider(color: Colors.white);
 
         // The syntax "i ~/ 2" divides i by 2 and returns an integer result.
         // For example: 1, 2, 3, 4, 5 becomes 0, 1, 1, 2, 2.
