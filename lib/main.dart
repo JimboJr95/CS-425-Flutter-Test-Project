@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Startup Name Generator',
       theme: new ThemeData(
-        primaryColor: Colors.tealAccent[700],
+        primaryColor: Colors.teal[400],
         scaffoldBackgroundColor: Colors.grey[800],
         primaryTextTheme: Typography(platform: TargetPlatform.iOS).white,
         textTheme: Typography(platform: TargetPlatform.iOS).white,
